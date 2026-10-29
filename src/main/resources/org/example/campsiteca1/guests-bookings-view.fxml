@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="720.0" prefWidth="1100.0" stylesheets="@styles.css"
+            xmlns="http://javafx.com/javafx/26" fx:controller="org.example.campsiteca1.guestController">
+
+    <top>
+        <VBox>
+            <children>
+                <MenuBar>
+                    <menus>
+                        <Menu text="File">
+                            <items>
+                                <MenuItem fx:id="saveMenuItem" text="Save data"/>
+                                <MenuItem fx:id="loadMenuItem" text="Load data"/>
+                                <SeparatorMenuItem/>
+                                <MenuItem fx:id="resetMenuItem" text="Reset all data"/>
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+                <HBox alignment="CENTER_LEFT" spacing="16.0" styleClass="page-header">
+                    <children>
+                        <Button fx:id="backButton" mnemonicParsing="false" onAction="#setBackButton" text="← Back"/>
+                        <VBox spacing="2.0">
+                            <children>
+                                <Label styleClass="title" text="Guests &amp; bookings"/>
+                                <Label styleClass="subtitle"
+                                       text="Register guests, make bookings and find the right stay."/>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </top>
+
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+            <BorderPane.margin>
+                <Insets bottom="24.0" left="24.0" right="24.0" top="16.0"/>
+            </BorderPane.margin>
+            <tabs>
+
+                <!-- ================= GUESTS ================= -->
+                <Tab text="Guests">
+                    <content>
+                        <HBox spacing="24.0" styleClass="tab-body">
+                            <children>
+                                <!-- Add guest -->
+                                <ScrollPane fitToWidth="true" prefWidth="460.0" styleClass="scroll-clean">
+                                    <content>
+                                        <VBox spacing="14.0">
+                                            <padding>
+                                                <Insets right="12.0"/>
+                                            </padding>
+                                            <children>
+                                                <Label styleClass="heading" text="Add a guest"/>
+                                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                    <children>
+                                                        <Label styleClass="muted" text="Guest ID"/>
+                                                        <Label fx:id="nextGuestIdLabel" styleClass="pill"
+                                                               text="Assigned on save"/>
+                                                    </children>
+                                                </HBox>
+                                                <VBox spacing="6.0">
+                                                    <children>
+                                                        <Label styleClass="muted" text="Full name"/>
+                                                        <TextField fx:id="guestNameField"/>
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="6.0">
+                                                    <children>
+                                                        <Label styleClass="muted" text="Date of birth"/>
+                                                        <DatePicker fx:id="guestDobPicker" maxWidth="Infinity"/>
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="6.0">
+                                                    <children>
+                                                        <Label styleClass="muted" text="Address"/>
+                                                        <TextField fx:id="guestAddressField"/>
+                                                    </children>
+                                                </VBox>
+                                                <HBox spacing="16.0">
+                                                    <children>
+                                                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                                            <children>
+                                                                <Label styleClass="muted" text="Telephone"/>
+                                                                <TextField fx:id="guestPhoneField"/>
+                                                            </children>
+                                                        </VBox>
+                                                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                                            <children>
+                                                                <Label styleClass="muted" text="Email"/>
+                                                                <TextField fx:id="guestEmailField"/>
+                                                            </children>
+                                                        </VBox>
+                                                    </children>
+                                                </HBox>
+                                                <VBox spacing="6.0">
+                                                    <children>
+                                                        <Label styleClass="muted" text="Other information"/>
+                                                        <TextArea fx:id="guestNotesArea" prefRowCount="3"
+                                                                  promptText="Allergies, accessibility needs, vehicle..."
+                                                                  wrapText="true"/>
+                                                    </children>
+                                                </VBox>
+                                                <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                                                    <children>
+                                                        <Button fx:id="clearGuestButton" mnemonicParsing="false"
+                                                                text="Clear"/>
+                                                        <Button fx:id="saveGuestButton" mnemonicParsing="false"
+                                                                styleClass="primary" text="Save guest"/>
+                                                    </children>
+                                                </HBox>
+                                            </children>
+                                        </VBox>
+                                    </content>
+                                </ScrollPane>
+
+                                <!-- Look up guest -->
+                                <VBox spacing="12.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label styleClass="heading" text="Guest record"/>
+                                        <HBox spacing="10.0">
+                                            <children>
+                                                <TextField fx:id="lookupIdField" promptText="Enter guest ID"
+                                                           HBox.hgrow="ALWAYS"/>
+                                                <Button fx:id="lookupGuestButton" mnemonicParsing="false"
+                                                        styleClass="primary" text="Find guest"/>
+                                            </children>
+                                        </HBox>
+                                        <VBox spacing="6.0" styleClass="detail-box">
+                                            <children>
+                                                <Label fx:id="guestDetailsLabel" text="Guest details will appear here."
+                                                       wrapText="true"/>
+                                            </children>
+                                        </VBox>
+                                        <Label styleClass="muted" text="Pending and past bookings"/>
+                                        <TableView fx:id="guestBookingsTable" VBox.vgrow="ALWAYS">
+                                            <columns>
+                                                <TableColumn prefWidth="140.0" text="Campsite"/>
+                                                <TableColumn prefWidth="110.0" text="Area"/>
+                                                <TableColumn prefWidth="80.0" text="Plot"/>
+                                                <TableColumn prefWidth="90.0" text="From"/>
+                                                <TableColumn prefWidth="90.0" text="To"/>
+                                                <TableColumn prefWidth="80.0" text="Status"/>
+                                            </columns>
+                                            <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                            </columnResizePolicy>
+                                        </TableView>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+                    </content>
+                </Tab>
+
+                <!-- ================= NEW BOOKING ================= -->
+                <Tab text="New booking">
+                    <content>
+                        <ScrollPane fitToWidth="true" styleClass="scroll-clean">
+                            <content>
+                                <VBox styleClass="tab-body">
+                                    <children>
+                                        <Label styleClass="heading" text="Add a booking"/>
+                                        <GridPane hgap="20.0" vgap="14.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0"/>
+                                                <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0"/>
+                                            </columnConstraints>
+                                            <children>
+                                                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                                    <children>
+                                                        <Label styleClass="muted" text="Guest ID"/>
+                                                        <TextField fx:id="bookingGuestIdField" promptText="e.g. 1001"/>
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                                    <children>
+                                                        <Label styleClass="muted" text="Campsite"/>
+                                                        <ComboBox fx:id="bookingCampsiteCombo" maxWidth="Infinity"
+                                                                  promptText="Select a campsite"/>
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                                    <children>
+                                                        <Label styleClass="muted" text="Camping area"/>
+                                                        <ComboBox fx:id="bookingAreaCombo" maxWidth="Infinity"
+                                                                  promptText="Select a camping area"/>
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                    <children>
+                                                        <Label styleClass="muted" text="Accommodation type"/>
+                                                        <ComboBox fx:id="bookingTypeCombo" maxWidth="Infinity"
+                                                                  promptText="Choose a type">
+                                                            <items>
+                                                                <FXCollections fx:factory="observableArrayList">
+                                                                    <String fx:value="Static mobile home"/>
+                                                                    <String fx:value="Bungalow"/>
+                                                                    <String fx:value="Apartment"/>
+                                                                    <String fx:value="Empty pitch"/>
+                                                                </FXCollections>
+                                                            </items>
+                                                        </ComboBox>
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                                                    <children>
+                                                        <Label styleClass="muted" text="Check-in"/>
+                                                        <DatePicker fx:id="bookingStartPicker" maxWidth="Infinity"/>
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                    <children>
+                                                        <Label styleClass="muted" text="Check-out"/>
+                                                        <DatePicker fx:id="bookingEndPicker" maxWidth="Infinity"/>
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                                                    <children>
+                                                        <Label styleClass="muted" text="Number of guests"/>
+                                                        <Spinner fx:id="bookingGuestsSpinner" editable="true"
+                                                                 initialValue="2" max="20" maxWidth="Infinity" min="1"/>
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                    <children>
+                                                        <Label styleClass="muted"
+                                                               text="Minimum bedrooms (if applicable)"/>
+                                                        <Spinner fx:id="bookingBedroomsSpinner" editable="true"
+                                                                 initialValue="0" max="10" maxWidth="Infinity" min="0"/>
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                                                    <children>
+                                                        <Label styleClass="muted" text="Minimum size (m²)"/>
+                                                        <TextField fx:id="bookingMinSizeField" promptText="e.g. 30"/>
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                    <children>
+                                                        <Label styleClass="muted" text="Budget (€)"/>
+                                                        <TextField fx:id="bookingBudgetField"
+                                                                   promptText="Total or per night"/>
+                                                    </children>
+                                                </VBox>
+                                                <CheckBox fx:id="bookingPowerCheck" mnemonicParsing="false"
+                                                          text="Powered plot required" GridPane.columnIndex="0"
+                                                          GridPane.rowIndex="5"/>
+                                            </children>
+                                            <rowConstraints>
+                                                <RowConstraints/>
+                                                <RowConstraints/>
+                                                <RowConstraints/>
+                                                <RowConstraints/>
+                                                <RowConstraints/>
+                                                <RowConstraints/>
+                                            </rowConstraints>
+                                        </GridPane>
+                                        <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                                            <children>
+                                                <Button fx:id="clearBookingButton" mnemonicParsing="false"
+                                                        text="Clear"/>
+                                                <Button fx:id="saveBookingButton" mnemonicParsing="false"
+                                                        styleClass="primary" text="Add booking"/>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                            </content>
+                        </ScrollPane>
+                    </content>
+                </Tab>
+
+                <!-- ================= PENDING BOOKINGS ================= -->
+                <Tab text="Pending bookings">
+                    <content>
+                        <VBox styleClass="tab-body">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                    <children>
+                                        <Label styleClass="heading" text="Pending bookings" HBox.hgrow="ALWAYS"/>
+                                        <Label styleClass="muted" text="Show"/>
+                                        <ComboBox fx:id="pendingCampsiteCombo" prefWidth="240.0"
+                                                  promptText="Whole system"/>
+                                    </children>
+                                </HBox>
+                                <TreeTableView fx:id="pendingTable" showRoot="false" VBox.vgrow="ALWAYS">
+                                    <columns>
+                                        <TreeTableColumn prefWidth="260.0" text="Campsite / area / plot"/>
+                                        <TreeTableColumn prefWidth="130.0" text="Guest"/>
+                                        <TreeTableColumn prefWidth="100.0" text="From"/>
+                                        <TreeTableColumn prefWidth="100.0" text="To"/>
+                                        <TreeTableColumn prefWidth="70.0" text="Nights"/>
+                                        <TreeTableColumn prefWidth="90.0" text="Total (€)"/>
+                                    </columns>
+                                    <columnResizePolicy>
+                                        <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                    </columnResizePolicy>
+                                </TreeTableView>
+                                <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                    <children>
+                                        <Label fx:id="pendingTotalLabel" styleClass="total-label"
+                                               text="0 bookings · €0.00" HBox.hgrow="ALWAYS"/>
+                                        <Button fx:id="cancelBookingButton" mnemonicParsing="false" styleClass="danger"
+                                                text="Cancel selected booking"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+
+                <!-- ================= SMART FIND ================= -->
+                <Tab text="Smart find">
+                    <content>
+                        <HBox spacing="24.0" styleClass="tab-body">
+                            <children>
+                                <ScrollPane fitToWidth="true" prefWidth="520.0" styleClass="scroll-clean">
+                                    <content>
+                                        <VBox spacing="14.0">
+                                            <padding>
+                                                <Insets right="12.0"/>
+                                            </padding>
+                                            <children>
+                                                <Label styleClass="heading" text="What are you looking for?"/>
+                                                <HBox spacing="16.0">
+                                                    <children>
+                                                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                                            <children>
+                                                                <Label styleClass="muted" text="Check-in"/>
+                                                                <DatePicker fx:id="findStartPicker"
+                                                                            maxWidth="Infinity"/>
+                                                            </children>
+                                                        </VBox>
+                                                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                                            <children>
+                                                                <Label styleClass="muted" text="Check-out"/>
+                                                                <DatePicker fx:id="findEndPicker" maxWidth="Infinity"/>
+                                                            </children>
+                                                        </VBox>
+                                                    </children>
+                                                </HBox>
+                                                <HBox spacing="16.0">
+                                                    <children>
+                                                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                                            <children>
+                                                                <Label styleClass="muted" text="Guests"/>
+                                                                <Spinner fx:id="findGuestsSpinner" editable="true"
+                                                                         initialValue="2" max="20" maxWidth="Infinity"
+                                                                         min="1"/>
+                                                            </children>
+                                                        </VBox>
+                                                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                                            <children>
+                                                                <Label styleClass="muted" text="Minimum stars"/>
+                                                                <Spinner fx:id="findStarsSpinner" editable="true"
+                                                                         initialValue="1" max="5" maxWidth="Infinity"
+                                                                         min="1"/>
+                                                            </children>
+                                                        </VBox>
+                                                        <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                                            <children>
+                                                                <Label styleClass="muted" text="Budget (€)"/>
+                                                                <TextField fx:id="findBudgetField" promptText="Total"/>
+                                                            </children>
+                                                        </VBox>
+                                                    </children>
+                                                </HBox>
+                                                <Label styleClass="muted" text="Must have"/>
+                                                <FlowPane hgap="20.0" prefWrapLength="440.0" vgap="12.0">
+                                                    <children>
+                                                        <CheckBox fx:id="findRestaurantCheck" mnemonicParsing="false"
+                                                                  prefWidth="130.0" text="Restaurant"/>
+                                                        <CheckBox fx:id="findPoolCheck" mnemonicParsing="false"
+                                                                  prefWidth="130.0" text="Swimming pool"/>
+                                                        <CheckBox fx:id="findShopsCheck" mnemonicParsing="false"
+                                                                  prefWidth="130.0" text="Shops"/>
+                                                        <CheckBox fx:id="findSpaCheck" mnemonicParsing="false"
+                                                                  prefWidth="130.0" text="Spa"/>
+                                                        <CheckBox fx:id="findGymCheck" mnemonicParsing="false"
+                                                                  prefWidth="130.0" text="Gym"/>
+                                                        <CheckBox fx:id="findWifiCheck" mnemonicParsing="false"
+                                                                  prefWidth="130.0" text="Wi-Fi"/>
+                                                        <CheckBox fx:id="findLaundryCheck" mnemonicParsing="false"
+                                                                  prefWidth="130.0" text="Laundry"/>
+                                                        <CheckBox fx:id="findMedicalCheck" mnemonicParsing="false"
+                                                                  prefWidth="130.0" text="Medical centre"/>
+                                                        <CheckBox fx:id="findAirConCheck" mnemonicParsing="false"
+                                                                  prefWidth="130.0" text="Air conditioning"/>
+                                                        <CheckBox fx:id="findPowerCheck" mnemonicParsing="false"
+                                                                  prefWidth="130.0" text="Power"/>
+                                                    </children>
+                                                </FlowPane>
+                                                <HBox alignment="CENTER_RIGHT">
+                                                    <children>
+                                                        <Button fx:id="smartFindButton" mnemonicParsing="false"
+                                                                styleClass="primary" text="Find a match"/>
+                                                    </children>
+                                                </HBox>
+                                            </children>
+                                        </VBox>
+                                    </content>
+                                </ScrollPane>
+
+                                <VBox spacing="12.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Label styleClass="heading" text="Best match"/>
+                                        <VBox spacing="6.0" styleClass="detail-box" VBox.vgrow="ALWAYS">
+                                            <children>
+                                                <Label fx:id="findResultLabel"
+                                                       text="Fill in your preferences and we'll suggest a campsite, area, plot and dates."
+                                                       wrapText="true"/>
+                                            </children>
+                                        </VBox>
+                                        <HBox alignment="CENTER_RIGHT">
+                                            <children>
+                                                <Button fx:id="bookMatchButton" mnemonicParsing="false"
+                                                        styleClass="primary" text="Book this match"/>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+</BorderPane>
